@@ -52,6 +52,11 @@ fetch_with_retry() {
     done
 }
 
+extract_from_readme() {
+    local data="$1"
+    echo "${data}" | grep -o "Version [0-9]\+\.[0-9]\+\.[0-9]\+" | head -n1 | cut -d' ' -f2
+}
+
 validate_json() {
     local data="$1"
     local description="$2"

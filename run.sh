@@ -22,12 +22,6 @@ fi
 info "🔍 checking for new releases"
 info "🔗 api base url: ${API_BASE_URL}"
 
-extract_from_readme() {
-    local data="$1"
-    echo "${data}" | grep -o "Version [0-9]\+\.[0-9]\+\.[0-9]\+" | head -n1 | cut -d' ' -f2
-}
-
-
 UNICODE_VERSIONS=$(fetch_with_retry "${API_BASE_URL}/v1/versions" "all versions")
 validate_json "${UNICODE_VERSIONS}" "all versions"
 
@@ -36,7 +30,16 @@ LATEST_README=$(fetch_with_retry "${API_BASE_URL}/v1/files/UCD/latest/ReadMe.txt
 
 info "🔍 extracting versions from README files"
 
-DRAFT_VERSION=$(extract_from_readme "${DRAFT_README}")
+# when there is no draft the draft readme is set to
+# "There is no current draft for the Unicode Standard or data files at this time."
+# But since this string could change, we just check if it matches "no current draft", or is totally empty
+
+if [[ "${DRAFT_README}" == *"no current draft"* || -z "${DRAFT_README}" ]]; then
+    DRAFT_VERSION=""
+else
+    DRAFT_VERSION=$(extract_from_readme "${DRAFT_README}")
+fi
+
 LATEST_RELEASE=$(extract_from_readme "${LATEST_README}")
 
 info "🔍 validating extracted versions"
