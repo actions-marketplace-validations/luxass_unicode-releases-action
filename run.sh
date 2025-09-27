@@ -39,6 +39,8 @@ info "🔍 extracting versions from README files"
 DRAFT_VERSION=$(extract_from_readme "${DRAFT_README}")
 LATEST_RELEASE=$(extract_from_readme "${LATEST_README}")
 
+info "🔍 validating extracted versions"
+
 # validate extracted versions
 if [[ -z "${DRAFT_VERSION}" ]]; then
     warn "could not extract draft version from README"
