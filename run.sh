@@ -32,8 +32,9 @@ UNICODE_VERSIONS=$(fetch_with_retry "${API_BASE_URL}/v1/versions" "all versions"
 validate_json "${UNICODE_VERSIONS}" "all versions"
 
 DRAFT_README=$(fetch_with_retry "${API_BASE_URL}/v1/files/draft/ReadMe.txt" "draft README")
-
 LATEST_README=$(fetch_with_retry "${API_BASE_URL}/v1/files/UCD/latest/ReadMe.txt" "latest release README")
+
+info "🔍 extracting versions from README files"
 
 DRAFT_VERSION=$(extract_from_readme "${DRAFT_README}")
 LATEST_RELEASE=$(extract_from_readme "${LATEST_README}")
