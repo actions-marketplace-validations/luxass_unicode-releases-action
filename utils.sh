@@ -35,7 +35,7 @@ fetch_with_retry() {
     local delay="${4:-2}"
 
     for ((i=1; i<=max_retries; i++)); do
-        info "🔄 fetching ${description} (attempt ${i}/${max_retries})"
+        info "🔄 fetching ${description} (attempt ${i}/${max_retries}) (url: ${url})"
 
         if response=$(curl -s --fail "${url}"); then
             echo "${response}"
