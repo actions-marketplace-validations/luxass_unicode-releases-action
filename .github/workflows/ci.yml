@@ -36,7 +36,7 @@ jobs:
 
       - name: fetch unicode releases
         id: unicode-releases
-        uses: ./
+        uses: luxass/unicode-releases-action@main
 
       - name: display action outputs
         env:
