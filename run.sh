@@ -35,6 +35,7 @@ info "🔍 extracting versions from README files"
 # But since this string could change, we just check if it matches "no current draft", or is totally empty
 
 if [[ "${DRAFT_README}" == *"no current draft"* || -z "${DRAFT_README}" ]]; then
+    warn "There is no current draft versions, setting draft version to empty"
     DRAFT_VERSION=""
 else
     DRAFT_VERSION=$(extract_from_readme "${DRAFT_README}")
@@ -43,11 +44,6 @@ fi
 LATEST_RELEASE=$(extract_from_readme "${LATEST_README}")
 
 info "🔍 validating extracted versions"
-
-# validate extracted versions
-if [[ -z "${DRAFT_VERSION}" ]]; then
-    warn "could not extract draft version from README"
-fi
 
 if [[ -z "${LATEST_RELEASE}" ]]; then
     warn "could not extract latest release version from README"
